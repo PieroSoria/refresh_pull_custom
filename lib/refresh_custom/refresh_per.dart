@@ -278,7 +278,8 @@ class _RefreshPullCustomState extends State<RefreshPullCustom>
     switch (_mode) {
       case _RefreshMode.done:
         _progressingController.stop();
-        _ringDisappearController.animateTo(
+
+        final Future<void> ringDisappear = _ringDisappearController.animateTo(
           1.0,
           duration: Duration(
             milliseconds:
@@ -289,26 +290,31 @@ class _RefreshPullCustomState extends State<RefreshPullCustom>
           curve: Curves.linear,
         );
 
-        _indicatorMoveWithPeakController.animateTo(
-          0.0,
-          duration: Duration(
-            milliseconds:
-                (widget.springAnimationDurationInMilliseconds /
-                        widget.animSpeedFactor)
-                    .round(),
-          ),
-          curve: Curves.linear,
-        );
-        _indicatorTranslateInOutController.animateTo(
-          0.0,
-          duration: Duration(
-            milliseconds:
-                (widget.springAnimationDurationInMilliseconds /
-                        widget.animSpeedFactor)
-                    .round(),
-          ),
-          curve: Curves.linear,
-        );
+        final Future<void> indicatorMove = _indicatorMoveWithPeakController
+            .animateTo(
+              0.0,
+              duration: Duration(
+                milliseconds:
+                    (widget.springAnimationDurationInMilliseconds /
+                            widget.animSpeedFactor)
+                        .round(),
+              ),
+              curve: Curves.linear,
+            );
+
+        final Future<void> indicatorTranslate =
+            _indicatorTranslateInOutController.animateTo(
+              0.0,
+              duration: Duration(
+                milliseconds:
+                    (widget.springAnimationDurationInMilliseconds /
+                            widget.animSpeedFactor)
+                        .round(),
+              ),
+              curve: Curves.linear,
+            );
+
+        await Future.wait([ringDisappear, indicatorMove, indicatorTranslate]);
 
         await _showPeakController.animateTo(
           0.3,
@@ -321,7 +327,7 @@ class _RefreshPullCustomState extends State<RefreshPullCustom>
           curve: Curves.linear,
         );
 
-        _radiusController.animateTo(
+        await _radiusController.animateTo(
           0.0,
           duration: Duration(
             milliseconds:
@@ -344,6 +350,8 @@ class _RefreshPullCustomState extends State<RefreshPullCustom>
           curve: Curves.easeOut,
         );
         _showPeakController.value = 0.0;
+
+        await Future.delayed(const Duration(milliseconds: 100));
 
         await _positionController.animateTo(
           0.0,
