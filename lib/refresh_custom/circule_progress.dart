@@ -32,8 +32,9 @@ class CircularProgress extends StatelessWidget {
     return Opacity(
       opacity: progressCircleOpacity,
       child: Container(
-        padding: .all(5),
+        padding: .all(20),
         decoration: BoxDecoration(color: backgroundColor, shape: .circle),
+        clipBehavior: .antiAliasWithSaveLayer,
         child: LoadingIndicator(color: color),
       ),
     );
