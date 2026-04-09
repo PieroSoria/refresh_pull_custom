@@ -9,7 +9,8 @@ class CircularProgress extends StatelessWidget {
   final double progressCircleOpacity;
   final double progressCircleRadius;
   final double progressCircleBorderWidth;
-  // final Color backgroundColor;
+  final Color? backgroundColor;
+  final Color? color;
   final double startAngle;
 
   const CircularProgress({
@@ -18,9 +19,10 @@ class CircularProgress extends StatelessWidget {
     required this.progressPercent,
     required this.progressCircleRadius,
     required this.progressCircleBorderWidth,
-    // required this.backgroundColor,
+    this.backgroundColor,
     required this.progressCircleOpacity,
     required this.startAngle,
+    this.color,
   });
 
   @override
@@ -29,7 +31,11 @@ class CircularProgress extends StatelessWidget {
     //     2 * math.max(progressCircleRadius, innerCircleRadius);
     return Opacity(
       opacity: progressCircleOpacity,
-      child: const LoadingIndicator(),
+      child: Container(
+        padding: .all(5),
+        decoration: BoxDecoration(color: backgroundColor, shape: .circle),
+        child: LoadingIndicator(color: color),
+      ),
     );
   }
 }

@@ -23,8 +23,9 @@ class RefreshPullCustom extends StatefulWidget {
     this.borderWidth = 2.0,
     this.showChildOpacityTransition = true,
     required this.onRefresh,
-    this.color,
+    this.colorCircule,
     this.backgroundColor,
+    this.backgroundColorCircule,
   });
 
   final Widget child;
@@ -34,7 +35,8 @@ class RefreshPullCustom extends StatefulWidget {
   final double borderWidth;
   final bool showChildOpacityTransition;
   final RefreshCallback onRefresh;
-  final Color? color;
+  final Color? colorCircule;
+  final Color? backgroundColorCircule;
   final Color? backgroundColor;
 
   @override
@@ -169,8 +171,12 @@ class _RefreshPullCustomState extends State<RefreshPullCustom>
     final ThemeData theme = Theme.of(context);
     _valueColor = _positionController.drive(
       ColorTween(
-        begin: (widget.color ?? theme.colorScheme.secondary).withOpacity(0.0),
-        end: (widget.color ?? theme.colorScheme.secondary).withOpacity(1.0),
+        begin: (widget.colorCircule ?? theme.colorScheme.secondary).withOpacity(
+          0.0,
+        ),
+        end: (widget.colorCircule ?? theme.colorScheme.secondary).withOpacity(
+          1.0,
+        ),
       ).chain(
         CurveTween(curve: const Interval(0.0, 1.0 / _kDragSizeFactorLimit)),
       ),
@@ -501,7 +507,9 @@ class _RefreshPullCustomState extends State<RefreshPullCustom>
 
     double defaultHeight = 100.0;
 
-    Color color = (widget.color != null) ? widget.color! : defaultColor;
+    Color color = (widget.colorCircule != null)
+        ? widget.colorCircule!
+        : defaultColor;
     Color backgroundColor = (widget.backgroundColor != null)
         ? widget.backgroundColor!
         : defaultBackgroundColor;
@@ -599,7 +607,8 @@ class _RefreshPullCustomState extends State<RefreshPullCustom>
                   (0.64 * _indicatorTranslateAnimation.value)),
             ),
             child: CircularProgress(
-              // backgroundColor: backgroundColor,
+              backgroundColor:
+                  widget.backgroundColorCircule ?? Colors.transparent,
               progressCircleOpacity: _ringOpacityAnimation.value,
               innerCircleRadius:
                   height *

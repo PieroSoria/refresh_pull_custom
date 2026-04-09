@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
 class LoadingIndicator extends StatefulWidget {
-  const LoadingIndicator({super.key});
+  final Color? color;
+  const LoadingIndicator({super.key, this.color});
 
   @override
   State<LoadingIndicator> createState() => _LoadingIndicatorState();
@@ -34,35 +35,35 @@ class _LoadingIndicatorState extends State<LoadingIndicator>
     return AnimatedBuilder(
       animation: _controller,
       builder: (context, child) {
-        return RotationTransition(
-          turns: _animation,
-          child: child,
-        );
+        return RotationTransition(turns: _animation, child: child);
       },
       child: CustomPaint(
         size: const Size(20.0, 20.0),
-        painter: _CircularIndicatorPainter(),
+        painter: _CircularIndicatorPainter(color: widget.color),
       ),
     );
   }
 }
 
 class _CircularIndicatorPainter extends CustomPainter {
+  final Color? color;
+
+  _CircularIndicatorPainter({this.color});
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..shader = const SweepGradient(
-        colors: [
-          Color.fromRGBO(255, 255, 255, 0),
-          Colors.white,
-        ],
-        startAngle: 0.0,
-        endAngle: 2.0 * math.pi,
-        stops: [0.3, 0.8],
-      ).createShader(Rect.fromCircle(
-        center: Offset(size.width / 2, size.height / 2),
-        radius: size.width / 2,
-      ))
+      ..shader =
+          SweepGradient(
+            colors: [Color.fromRGBO(255, 255, 255, 0), color ?? Colors.white],
+            startAngle: 0.0,
+            endAngle: 2.0 * math.pi,
+            stops: [0.3, 0.8],
+          ).createShader(
+            Rect.fromCircle(
+              center: Offset(size.width / 2, size.height / 2),
+              radius: size.width / 2,
+            ),
+          )
       ..style = PaintingStyle.stroke
       ..strokeWidth = 3.0
       ..strokeCap = StrokeCap.round;
