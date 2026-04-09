@@ -554,7 +554,10 @@ class _RefreshPullCustomState extends State<RefreshPullCustom>
             _showPeakController,
           ]),
           builder: (context, child) {
-            return Container(height: _value.value * height * 2, color: color);
+            return Container(
+              height: _value.value * height * 2,
+              color: backgroundColor,
+            );
           },
         ),
         // AnimatedBuilder(
@@ -596,7 +599,7 @@ class _RefreshPullCustomState extends State<RefreshPullCustom>
                   (0.64 * _indicatorTranslateAnimation.value)),
             ),
             child: CircularProgress(
-              backgroundColor: backgroundColor,
+              // backgroundColor: backgroundColor,
               progressCircleOpacity: _ringOpacityAnimation.value,
               innerCircleRadius:
                   height *

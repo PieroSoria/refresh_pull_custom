@@ -9,7 +9,7 @@ class CircularProgress extends StatelessWidget {
   final double progressCircleOpacity;
   final double progressCircleRadius;
   final double progressCircleBorderWidth;
-  final Color backgroundColor;
+  // final Color backgroundColor;
   final double startAngle;
 
   const CircularProgress({
@@ -18,7 +18,7 @@ class CircularProgress extends StatelessWidget {
     required this.progressPercent,
     required this.progressCircleRadius,
     required this.progressCircleBorderWidth,
-    required this.backgroundColor,
+    // required this.backgroundColor,
     required this.progressCircleOpacity,
     required this.startAngle,
   });
